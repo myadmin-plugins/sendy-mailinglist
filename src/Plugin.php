@@ -48,9 +48,9 @@ class Plugin {
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
 	public static function doMailinglistSubscribe(GenericEvent $event) {
-		$account = $event->getSubject();
+		$email = $event->getSubject();
 		if (defined('SENDY_ENABLE') && SENDY_ENABLE == 1) {
-			self::doEmailSetup($account->getId());
+			self::doEmailSetup($email);
 		}
 	}
 
@@ -68,23 +68,24 @@ class Plugin {
 	/**
 	 * @param int $custid
 	 */
-	public static function doSetup($custid) {
-		$data = $GLOBALS['tf']->accounts->read($custid);
-		self::doEmailSetup($lid, isset($data['name']) ? $data['name'] : false);
+	public static function doSetup($accountId) {
+		$data = $GLOBALS['tf']->accounts->read($accountId);
+		self::doEmailSetup($data['account_lid'], isset($data['name']) ? ['name' => $data['name']] : false);
 	}
 
 	/**
 	 * @param string $lid
+	 * @param false|array $parrams
 	 */
-	public static function doEmailSetup($lid, $name = false) {
-		myadmin_log('accounts', 'info', "sendy_setup($lid) Called", __LINE__, __FILE__);
+	public static function doEmailSetup($email, $params = false) {
+		myadmin_log('accounts', 'info', "sendy_setup($email) Called", __LINE__, __FILE__);
 		$postarray = [
-			'email' => $lid,
+			'email' => $email,
 			'list' => SENDY_LIST_ID,
 			'boolean' => 'true'
 		];
-		if ($name !== false)
-			$postarray['name'] = $name;
+		if ($params !== false)
+			$postarray = array_merge($postarray, $params);
 		$postdata = http_build_query($postarray);
 		$opts = [
 			'http' => [
