@@ -66,7 +66,6 @@ class Plugin {
 	}
 
 	/**
-	 * @param int $custid
 	 */
 	public static function doSetup($accountId) {
 		$data = $GLOBALS['tf']->accounts->read($accountId);
@@ -74,8 +73,7 @@ class Plugin {
 	}
 
 	/**
-	 * @param string $lid
-	 * @param false|array $parrams
+	 * @param false|array $params
 	 */
 	public static function doEmailSetup($email, $params = false) {
 		myadmin_log('accounts', 'info', "sendy_setup($email) Called", __LINE__, __FILE__);
