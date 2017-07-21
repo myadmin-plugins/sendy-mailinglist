@@ -29,6 +29,7 @@ class Plugin {
 		return [
 			'system.settings' => [__CLASS__, 'getSettings'],
 			'account.activated' => [__CLASS__, 'doAccountActivated'],
+			'mailinglist.subscribe' => [__CLASS__, 'doMailinglistSubscribe'],
 			//'ui.menu' => [__CLASS__, 'getMenu'],
 		];
 	}
@@ -40,6 +41,16 @@ class Plugin {
 		$account = $event->getSubject();
 		if (defined('SENDY_ENABLE') && SENDY_ENABLE == 1) {
 			self::doSetup($account->getAccountId());
+		}
+	}
+
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
+	public static function doMailinglistSubscribe(GenericEvent $event) {
+		$account = $event->getSubject();
+		if (defined('SENDY_ENABLE') && SENDY_ENABLE == 1) {
+			self::doEmailSetup($account->getAccountId());
 		}
 	}
 
@@ -58,20 +69,22 @@ class Plugin {
 	 * @param int $custid
 	 */
 	public static function doSetup($custid) {
-		myadmin_log('accounts', 'info', "sendy_setup($custid) Called", __LINE__, __FILE__);
-		$module = get_module_name('default');
-		$GLOBALS['tf']->accounts->set_db_module($module);
-		$GLOBALS['tf']->history->set_db_module($module);
 		$data = $GLOBALS['tf']->accounts->read($custid);
-		$lid = $data['account_lid'];
+		self::doEmailSetup($lid, isset($data['name']) ? $data['name'] : false);
+	}
+
+	/**
+	 * @param string $lid
+	 */
+	public static function doEmailSetup($lid, $name = false) {
+		myadmin_log('accounts', 'info', "sendy_setup($lid) Called", __LINE__, __FILE__);
 		$postarray = [
 			'email' => $lid,
 			'list' => SENDY_LIST_ID,
 			'boolean' => 'true'
 		];
-		if (isset($data['name'])) {
-			$postarray['name'] = $data['name'];
-		}
+		if ($name !== false)
+			$postarray['name'] = $name;
 		$postdata = http_build_query($postarray);
 		$opts = [
 			'http' => [
