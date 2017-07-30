@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 class Plugin {
 
 	public static $name = 'Sendy Plugin';
-	public static $description = 'Allows handling of Sendy emails and honeypots';
+	public static $description = 'Allows handling of Sendy based Mailing List Subscriptions';
 	public static $help = '';
 	public static $type = 'plugin';
 
