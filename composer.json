@@ -34,7 +34,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Detain\\MyAdminSendy\\": "src\/"
+            "Detain\\MyAdminSendy\\": "src/"
         }
     }
 }
