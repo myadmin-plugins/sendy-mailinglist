@@ -39,9 +39,8 @@ class Plugin {
 	 */
 	public static function doAccountActivated(GenericEvent $event) {
 		$account = $event->getSubject();
-		if (defined('SENDY_ENABLE') && SENDY_ENABLE == 1) {
+		if (defined('SENDY_ENABLE') && SENDY_ENABLE == 1)
 			self::doSetup($account->getId());
-		}
 	}
 
 	/**
@@ -49,9 +48,8 @@ class Plugin {
 	 */
 	public static function doMailinglistSubscribe(GenericEvent $event) {
 		$email = $event->getSubject();
-		if (defined('SENDY_ENABLE') && SENDY_ENABLE == 1) {
+		if (defined('SENDY_ENABLE') && SENDY_ENABLE == 1)
 			self::doEmailSetup($email);
-		}
 	}
 
 	/**
