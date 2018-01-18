@@ -24,5 +24,5 @@ composer require detain/myadmin-sendy-mailinglist
 
 ## License
 
-The Sendy handling plugin for MyAdmin class is licensed under the LGPL-v2 license.
+The Sendy handling plugin for MyAdmin class is licensed under the LGPL-v2.1 license.
 
