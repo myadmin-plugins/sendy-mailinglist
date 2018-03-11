@@ -68,21 +68,21 @@ class Plugin {
 	 */
 	public static function doSetup($accountId) {
 		$data = $GLOBALS['tf']->accounts->read($accountId);
-		self::doEmailSetup($data['account_lid'], isset($data['name']) ? ['name' => $data['name']] : false);
+		self::doEmailSetup($data['account_lid'], isset($data['name']) ? ['name' => $data['name']] : FALSE);
 	}
 
 	/**
 	 * @param                  $email
 	 * @param array|bool|false $params
 	 */
-	public static function doEmailSetup($email, $params = false) {
+	public static function doEmailSetup($email, $params = FALSE) {
 		myadmin_log('accounts', 'info', "sendy_setup($email) Called", __LINE__, __FILE__);
 		$postarray = [
 			'email' => $email,
 			'list' => SENDY_LIST_ID,
 			'boolean' => 'true'
 		];
-		if ($params !== false)
+		if ($params !== FALSE)
 			$postarray = array_merge($postarray, $params);
 		$postdata = http_build_query($postarray);
 		$opts = [
