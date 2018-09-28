@@ -1,5 +1,5 @@
 {
-	"name": "detain/myadmin-sendy-mailinglist",
+	"name": "detain/sendy-mailinglist",
 	"type": "myadmin-plugin",
 	"description": "Sendy handling plugin for MyAdmin",
 	"keywords": [
