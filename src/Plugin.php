@@ -67,10 +67,10 @@ class Plugin
          * @var \MyAdmin\Settings $settings
          **/
         $settings = $event->getSubject();
-		$settings->add_dropdown_setting(__('Accounts'), __('Sendy'), 'sendy_enable', __('Enable Sendy'), __('Enable/Disable Sendy Mailing on Account Signup'), (defined('SENDY_ENABLE') ? SENDY_ENABLE : '0'), ['0', '1'], ['No', 'Yes']);
-		$settings->add_text_setting(__('Accounts'), __('Sendy'), 'sendy_api_key', __('API Key'), __('API Key'), (defined('SENDY_API_KEY') ? SENDY_API_KEY : ''));
-		$settings->add_text_setting(__('Accounts'), __('Sendy'), 'sendy_list_id', __('List ID'), __('List ID'), (defined('SENDY_LIST_ID') ? SENDY_LIST_ID : ''));
-		$settings->add_text_setting(__('Accounts'), __('Sendy'), 'sendy_apiurl', __('API URL'), __('API URL'), (defined('SENDY_APIURL') ? SENDY_APIURL : ''));
+		$settings->add_dropdown_setting(_('Accounts'), _('Sendy'), 'sendy_enable', _('Enable Sendy'), _('Enable/Disable Sendy Mailing on Account Signup'), (defined('SENDY_ENABLE') ? SENDY_ENABLE : '0'), ['0', '1'], ['No', 'Yes']);
+		$settings->add_text_setting(_('Accounts'), _('Sendy'), 'sendy_api_key', _('API Key'), _('API Key'), (defined('SENDY_API_KEY') ? SENDY_API_KEY : ''));
+		$settings->add_text_setting(_('Accounts'), _('Sendy'), 'sendy_list_id', _('List ID'), _('List ID'), (defined('SENDY_LIST_ID') ? SENDY_LIST_ID : ''));
+		$settings->add_text_setting(_('Accounts'), _('Sendy'), 'sendy_apiurl', _('API URL'), _('API URL'), (defined('SENDY_APIURL') ? SENDY_APIURL : ''));
 	}
 
 	/**
