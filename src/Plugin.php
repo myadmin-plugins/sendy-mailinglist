@@ -2,6 +2,8 @@
 
 namespace Detain\MyAdminSendy;
 
+require_once __DIR__.'/../../../workerman/statistics/Applications/Statistics/Clients/StatisticClient.php';
+
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 /**
@@ -105,10 +107,14 @@ class Plugin
 				'content' => $postdata
 			]
 		];
+        \StatisticClient::tick('Sendy', 'subscribe');
 		$context = stream_context_create($opts);
 		$result = trim(file_get_contents(SENDY_APIURL.'/subscribe', false, $context));
 		if ($result != '1') {
+            \StatisticClient::report('Sendy', 'subscribe', false, 100, $result, STATISTICS_SERVER);
 			myadmin_log('accounts', 'info', "Sendy Response: {$result}", __LINE__, __FILE__);
-		}
+		} else {
+            \StatisticClient::report('Sendy', 'subscribe', true, 0, '', STATISTICS_SERVER);
+        }
 	}
 }
