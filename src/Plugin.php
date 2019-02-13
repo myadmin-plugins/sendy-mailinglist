@@ -110,7 +110,7 @@ class Plugin
         \StatisticClient::tick('Sendy', 'subscribe');
 		$context = stream_context_create($opts);
 		$result = trim(file_get_contents(SENDY_APIURL.'/subscribe', false, $context));
-		if ($result != '1') {
+		if ($result != '1' && $result != 'Already subscribed.') {
             \StatisticClient::report('Sendy', 'subscribe', false, 100, $result, STATISTICS_SERVER);
 			myadmin_log('accounts', 'info', "Sendy Response: {$result}", __LINE__, __FILE__);
 		} else {
