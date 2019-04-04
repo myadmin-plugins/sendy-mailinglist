@@ -63,12 +63,12 @@ class Plugin
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-    public static function getSettings(GenericEvent $event)
-    {
-        /**
-         * @var \MyAdmin\Settings $settings
-         **/
-        $settings = $event->getSubject();
+	public static function getSettings(GenericEvent $event)
+	{
+		/**
+		 * @var \MyAdmin\Settings $settings
+		 **/
+		$settings = $event->getSubject();
 		$settings->add_dropdown_setting(_('Accounts'), _('Sendy'), 'sendy_enable', _('Enable Sendy'), _('Enable/Disable Sendy Mailing on Account Signup'), (defined('SENDY_ENABLE') ? SENDY_ENABLE : '0'), ['0', '1'], ['No', 'Yes']);
 		$settings->add_text_setting(_('Accounts'), _('Sendy'), 'sendy_api_key', _('API Key'), _('API Key'), (defined('SENDY_API_KEY') ? SENDY_API_KEY : ''));
 		$settings->add_text_setting(_('Accounts'), _('Sendy'), 'sendy_list_id', _('List ID'), _('List ID'), (defined('SENDY_LIST_ID') ? SENDY_LIST_ID : ''));
@@ -107,14 +107,14 @@ class Plugin
 				'content' => $postdata
 			]
 		];
-        \StatisticClient::tick('Sendy', 'subscribe');
+		\StatisticClient::tick('Sendy', 'subscribe');
 		$context = stream_context_create($opts);
 		$result = trim(file_get_contents(SENDY_APIURL.'/subscribe', false, $context));
 		if ($result != '1' && $result != 'Already subscribed.') {
-            \StatisticClient::report('Sendy', 'subscribe', false, 100, $result, STATISTICS_SERVER);
+			\StatisticClient::report('Sendy', 'subscribe', false, 100, $result, STATISTICS_SERVER);
 			myadmin_log('accounts', 'info', "Sendy Response: {$result}", __LINE__, __FILE__);
 		} else {
-            \StatisticClient::report('Sendy', 'subscribe', true, 0, '', STATISTICS_SERVER);
-        }
+			\StatisticClient::report('Sendy', 'subscribe', true, 0, '', STATISTICS_SERVER);
+		}
 	}
 }
