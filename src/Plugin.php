@@ -93,6 +93,7 @@ class Plugin
 		myadmin_log('accounts', 'info', "sendy_setup($email) Called", __LINE__, __FILE__);
 		$postarray = [
 			'email' => $email,
+			'api_key' => SENDY_API_KEY,
 			'list' => SENDY_LIST_ID,
 			'boolean' => 'true'
 		];
