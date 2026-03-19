@@ -1,28 +1,57 @@
-# Sendy handling plugin for MyAdmin
+# MyAdmin Sendy Mailing List Plugin
 
-Sendy handling plugin for MyAdmin
+Sendy mailing list integration plugin for the [MyAdmin](https://github.com/detain/myadmin) control panel. Provides automated subscriber management through the [Sendy](https://sendy.co/) API, including event-driven hooks for account activation and mailing list subscription workflows.
 
-## Build Status and Code Analysis
+[![Build Status](https://github.com/detain/myadmin-sendy-mailinglist/actions/workflows/tests.yml/badge.svg)](https://github.com/detain/myadmin-sendy-mailinglist/actions/workflows/tests.yml)
+[![Latest Stable Version](https://poser.pugx.org/detain/myadmin-sendy-mailinglist/version)](https://packagist.org/packages/detain/myadmin-sendy-mailinglist)
+[![Total Downloads](https://poser.pugx.org/detain/myadmin-sendy-mailinglist/downloads)](https://packagist.org/packages/detain/myadmin-sendy-mailinglist)
+[![License](https://poser.pugx.org/detain/myadmin-sendy-mailinglist/license)](https://packagist.org/packages/detain/myadmin-sendy-mailinglist)
 
-Site          | Status
---------------|---------------------------
-![Travis-CI](http://i.is.cc/storage/GYd75qN.png "Travis-CI")     | [![Build Status](https://travis-ci.org/detain/myadmin-sendy-mailinglist.svg?branch=master)](https://travis-ci.org/detain/myadmin-sendy-mailinglist)
-![CodeClimate](http://i.is.cc/storage/GYlageh.png "CodeClimate")  | [![Code Climate](https://codeclimate.com/github/detain/myadmin-sendy-mailinglist/badges/gpa.svg)](https://codeclimate.com/github/detain/myadmin-sendy-mailinglist) [![Test Coverage](https://codeclimate.com/github/detain/myadmin-sendy-mailinglist/badges/coverage.svg)](https://codeclimate.com/github/detain/myadmin-sendy-mailinglist/coverage) [![Issue Count](https://codeclimate.com/github/detain/myadmin-sendy-mailinglist/badges/issue_count.svg)](https://codeclimate.com/github/detain/myadmin-sendy-mailinglist)
-![Scrutinizer](http://i.is.cc/storage/GYeUnux.png "Scrutinizer")   | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/myadmin-plugins/sendy-mailinglist/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/myadmin-plugins/sendy-mailinglist/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/myadmin-plugins/sendy-mailinglist/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/myadmin-plugins/sendy-mailinglist/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/myadmin-plugins/sendy-mailinglist/badges/build.png?b=master)](https://scrutinizer-ci.com/g/myadmin-plugins/sendy-mailinglist/build-status/master)
-![Codacy](http://i.is.cc/storage/GYi66Cx.png "Codacy")        | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/226251fc068f4fd5b4b4ef9a40011d06)](https://www.codacy.com/app/detain/myadmin-sendy-mailinglist) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/25fa74eb74c947bf969602fcfe87e349)](https://www.codacy.com/app/detain/myadmin-sendy-mailinglist?utm_source=github.com&utm_medium=referral&utm_content=detain/myadmin-sendy-mailinglist&utm_campaign=Badge_Coverage)
-![Coveralls](http://i.is.cc/storage/GYjNSim.png "Coveralls")    | [![Coverage Status](https://coveralls.io/repos/github/detain/db_abstraction/badge.svg?branch=master)](https://coveralls.io/github/detain/myadmin-sendy-mailinglist?branch=master)
-![Packagist](http://i.is.cc/storage/GYacBEX.png "Packagist")     | [![Latest Stable Version](https://poser.pugx.org/detain/myadmin-sendy-mailinglist/version)](https://packagist.org/packages/detain/myadmin-sendy-mailinglist) [![Total Downloads](https://poser.pugx.org/detain/myadmin-sendy-mailinglist/downloads)](https://packagist.org/packages/detain/myadmin-sendy-mailinglist) [![Latest Unstable Version](https://poser.pugx.org/detain/myadmin-sendy-mailinglist/v/unstable)](//packagist.org/packages/detain/myadmin-sendy-mailinglist) [![Monthly Downloads](https://poser.pugx.org/detain/myadmin-sendy-mailinglist/d/monthly)](https://packagist.org/packages/detain/myadmin-sendy-mailinglist) [![Daily Downloads](https://poser.pugx.org/detain/myadmin-sendy-mailinglist/d/daily)](https://packagist.org/packages/detain/myadmin-sendy-mailinglist) [![License](https://poser.pugx.org/detain/myadmin-sendy-mailinglist/license)](https://packagist.org/packages/detain/myadmin-sendy-mailinglist)
+## Features
 
+- Automatic mailing list subscription on account activation
+- Event-driven architecture using Symfony EventDispatcher
+- Configurable Sendy API endpoint, API key, and list ID via admin settings
+- Toggle enable/disable from the MyAdmin settings panel
+
+## Requirements
+
+- PHP >= 7.4
+- ext-soap
+- Symfony EventDispatcher ^5.0 || ^6.0 || ^7.0
 
 ## Installation
-
-Install with composer like
 
 ```sh
 composer require detain/myadmin-sendy-mailinglist
 ```
 
+## Configuration
+
+The plugin registers four settings in the MyAdmin admin panel under **Accounts > Sendy**:
+
+| Setting         | Description                          |
+|-----------------|--------------------------------------|
+| `sendy_enable`  | Enable or disable Sendy integration  |
+| `sendy_api_key` | Your Sendy API key                   |
+| `sendy_list_id` | The target Sendy mailing list ID     |
+| `sendy_apiurl`  | Base URL of your Sendy installation  |
+
+## Event Hooks
+
+| Event                    | Handler                   | Description                            |
+|--------------------------|---------------------------|----------------------------------------|
+| `system.settings`        | `getSettings`             | Registers admin panel settings         |
+| `account.activated`      | `doAccountActivated`      | Subscribes user on account activation  |
+| `mailinglist.subscribe`  | `doMailinglistSubscribe`  | Subscribes an email address to the list|
+
+## Running Tests
+
+```sh
+composer install
+vendor/bin/phpunit
+```
+
 ## License
 
-The Sendy handling plugin for MyAdmin class is licensed under the LGPL-v2.1 license.
-
+This package is licensed under the [LGPL-2.1](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html) license.
