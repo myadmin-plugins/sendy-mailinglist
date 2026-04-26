@@ -82,7 +82,7 @@ class Plugin
      */
     public static function doSetup($accountId)
     {
-        $data = $GLOBALS['tf']->accounts->read($accountId);
+        $data = \MyAdmin\App::accounts()->read($accountId);
         self::doEmailSetup($data['account_lid'], isset($data['name']) ? ['name' => $data['name']] : false);
     }
 
