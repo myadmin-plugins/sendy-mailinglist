@@ -1,6 +1,6 @@
 ---
 name: phpunit-plugin-test
-description: Writes PHPUnit tests for src/Plugin.php methods using stubs in tests/bootstrap.php. Use when user says 'add test', 'write test for', 'test the plugin', or modifies a method in Plugin.php. Covers class structure, hook registration, event handler signatures, and settings registration via anonymous-class stubs. Do NOT use for integration tests requiring a live Sendy instance or network access. NOTE: for a plugin's contract/behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
+description: Writes PHPUnit tests for src/Plugin.php methods using stubs in tests/bootstrap.php. Use when user says 'add test', 'write test for', 'test the plugin', or modifies a method in Plugin.php. Covers class structure, hook registration, event handler signatures, and settings registration via anonymous-class stubs. Do NOT use for integration tests requiring a live Sendy instance or network access. For a plugin's contract or behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
 ---
 <!-- myadmin-contract-harness-notice -->
 > ### ⚠️ Read this before the rest of the file
